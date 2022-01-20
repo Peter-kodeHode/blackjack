@@ -1,0 +1,85 @@
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;
+    background-image: url("images/table.png");
+    background-size: cover;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    color: goldenrod;
+    text-shadow: 2px 2px black;
+}
+
+#message-el {
+    font-style: italic;
+    font-size:1.5em;
+    text-shadow: 2px 2px black;
+}
+
+#player-section {
+    border:goldenrod;
+    border-style: solid;
+    width:300px;
+    margin:10px auto;
+    text-shadow: 2px 2px black;
+}
+
+#dealer-section {
+    border:maroon;
+    border-style: solid;
+    width:300px;
+    margin:10px auto;
+    text-shadow: 2px 2px black;
+}
+
+#bet-section {
+        border:goldenrod;
+        border-style: solid;
+        width:300px;
+        margin:10px auto;
+        text-shadow: 2px 2px black;
+}
+
+button {
+    color: #016f32;
+    width: 150px;
+    background: goldenrod;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    border: none;
+    border-radius: 2px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+#player-el{
+    border:goldenrod;
+    border-style: solid;
+    width:300px;
+    margin:auto;
+    margin-bottom:10px;
+    text-align: center;
+    border-radius: 50px;
+    padding: 2px 0 2px 0;
+    text-shadow: 2px 2px black;
+}
+
+#dealer-el{
+    border:maroon;
+    border-style: solid;
+    width:300px;
+    margin:10px auto;
+    margin-bottom:10px;
+    text-align: center;
+    border-radius: 50px;
+    padding: 2px 0 2px 0;
+    text-shadow: 2px 2px black;
+}
+
+img {
+    max-width:75px;
+    max-height:75px;
+}
