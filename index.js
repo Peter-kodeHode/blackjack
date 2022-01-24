@@ -274,11 +274,12 @@ function drawCard () {
     .then (response => response.json())
     .then (data => {
         console.log(data.cards)
-     
+        
     for (i in data.cards) {console.log(data.cards[i].value)
-        if (data.cards[i].value === "JACK"||"KING"||"QUEEN") {
+        if (data.cards[i].value === "JACK" || data.cards[i].value === "KING" || data.cards[i].value === "QUEEN") {
             console.log("match")
             data.cards[i].value = 10;
+        } 
         }
             cardVal.push(data.cards[i].value);
             console.log(cardVal);
@@ -286,8 +287,11 @@ function drawCard () {
             document.getElementById("card-img")
             .innerHTML += '<img src="' + imageUrl + '">';
     }
-    })}
+    )}
 
-//MAybe push so that every new entry to array gets it's own index position. Done and works
 //Turn king, queen and jack into 10's. Ace into 11 or 1
+//If I change to just one of them and remove || then Jack works and numbers don't turn into 10s, but King and Queen still don't work.
 
+//WORKS NOW
+//Rewrote if (data.cards[i].value === "JACK"||"KING"||"QUEEN") as
+//if (data.cards[i].value === "JACK" || data.cards[i].value === "KING" || data.cards[i].value === "QUEEN")
