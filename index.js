@@ -5,7 +5,7 @@ let player = {
 
 let dealer = {
   name: "Dealer",
-  chips: 500000,
+  chips: 50000000,
 };
 
 let cards = [];
@@ -19,7 +19,6 @@ let hasCards = false;
 let betPlaced = false;
 let betAmount = 0;
 let message = "";
-
 let messageEl = document.getElementById("message-el");
 let sumEl = document.getElementById("sum-el");
 let cardsEl = document.getElementById("cards-el");
@@ -35,49 +34,28 @@ playerEl.textContent = player.name + ": $" + player.chips;
 
 dealerEl.textContent = dealer.name + ": $" + dealer.chips;
 
-function getRandomCard() {
-  let randomNumber = Math.floor(Math.random() * 13) + 1;
-  if (randomNumber > 10) {
-    return 10;
-  } else if (randomNumber === 1 && sum < 11) {
-    return 11;
-  } else if (randomNumber === 1 && sum > 10) {
-    return 1;
-  } else {
-    return randomNumber;
-  }
+async function getRandomCard() {
+  let cardValue = await drawCard();
+  return cardValue;
 }
 
-//Gotta fix so two aces at start don't result in 22 and bust
+//Aces should only give the value of 1 if the value of 11 causes the player or dealer to bust.
 
-function dealerGetRandomCard() {
-  let randomNumber = Math.floor(Math.random() * 13) + 1;
-  // let randomNumber = 1
-  if (randomNumber > 10) {
-    return 10;
-  } else if (randomNumber === 1 && dealerSum < 11 && dealerCards[0] < 11) {
-    return 11;
-  } else if (randomNumber === 1 && dealerSum > 10 && dealerCards[0] > 10) {
-    return 1;
-  } else {
-    return randomNumber;
-  }
-}
-
-function startGame() {
-  if (hasCards === false && betPlaced === true) {
-    //Added hasCards and betPlaced booleans to prevent pressing startgame when game is already started and
-    //making it unable to start game when a bet hasn't been placed.
+async function startGame() {
+  if (!hasCards && betPlaced) {
     isAlive = true;
     hasBlackJack = false;
-    firstCard = getRandomCard();
-    secondCard = getRandomCard();
+
+    let firstCard = await getRandomCard();
+    let secondCard = await getRandomCard();
     cards = [firstCard, secondCard];
     sum = firstCard + secondCard;
-    dealerFirstCard = dealerGetRandomCard();
-    dealerSecondCard = dealerGetRandomCard();
+
+    let dealerFirstCard = await getRandomCard();
+    let dealerSecondCard = await getRandomCard();
     dealerCards = [dealerFirstCard, dealerSecondCard];
     dealerSum = dealerFirstCard + dealerSecondCard;
+
     hasCards = true;
     renderGame();
   }
@@ -118,7 +96,7 @@ function renderGame() {
     playerEl.textContent = player.name + ": $" + player.chips;
     dealerEl.textContent = dealer.name + ": $" + dealer.chips;
   }
-
+  //Simplify
   if (dealerSum === 21 && sum < 21) {
     message = "The dealer has blackjack!";
     hasBlackJack = true;
@@ -149,9 +127,9 @@ function renderGame() {
   messageEl.textContent = message;
 }
 
-function newCard() {
+async function newCard() {
   if (isAlive === true && hasBlackJack === false) {
-    let card = getRandomCard();
+    let card = await getRandomCard();
     sum += card;
     cards.push(card);
     renderGame();
@@ -164,7 +142,7 @@ function newCard() {
 //EDIT: Fixed now I think.
 //Can't make dealer hit on 17 or higher even when my sum of cards is higher. Gotta either fix it here or in the win conditions aka rendergame()
 
-function stand() {
+async function stand() {
   if (
     dealerSum > 16 &&
     dealerSum > 0 &&
@@ -180,7 +158,7 @@ function stand() {
     hasBlackJack === false &&
     hasCards === true
   ) {
-    let dealerCard = dealerGetRandomCard();
+    let dealerCard = await getRandomCard();
     dealerSum += dealerCard;
     dealerCards.push(dealerCard);
     renderGame();
@@ -192,7 +170,7 @@ function stand() {
     hasBlackJack === false &&
     hasCards === true
   ) {
-    let dealerCard = dealerGetRandomCard();
+    let dealerCard = await getRandomCard();
     dealerSum += dealerCard;
     dealerCards.push(dealerCard);
     renderGame();
@@ -212,145 +190,61 @@ function setName() {
   }
 }
 
-//Bet now subtracts from player.chips. Now I gotta make you unable to bet if you're out of money.
-//Also have to make it so if you cancel the prompt or enter text instead of numbers, you are unable to bet.
-//You can now change your bet and it returns whatever you bet earlier if the bet is smaller.
-
-// function placeBet(){
-//     if (betPlaced === false) {
-//         betAmount = Number(prompt("Please enter your bet"));
-//         player.chips = player.chips - betAmount
-//         document.getElementById("your-bet").innerHTML =
-//         yourBet.textContent = "Bet: $" + betAmount
-//         playerEl.textContent = player.name + ": $" + player.chips
-//         betPlaced = true;
-//     }
-//     else if (betAmount == "null" || betAmount == null || betAmount == "" || betAmount == NaN) {
-//         return;
-//     }
-//     else if (betPlaced === true && betAmount > 0)
-//         player.chips = betAmount + player.chips
-//         betAmount = Number(prompt("Please enter a new bet"));
-//         player.chips = player.chips - betAmount
-//         document.getElementById("your-bet").innerHTML =
-//         yourBet.textContent = "Bet: $" + betAmount
-//         playerEl.textContent = player.name + ": $" + player.chips
-//         betPlaced = true;
-// }
-
 function placeBet() {
-  if (
-    (betPlaced === false && betIn.value === "number") ||
-    betIn.value === Number ||
-    betAmount === "number" ||
-    betAmount === Number
-  ) {
-    betAmount = parseInt(betIn.value); //parseInt solved the issue with the payouts adding up as string in player/dealer chips
-    console.log(betIn.value);
-    console.log(betAmount);
-    player.chips = player.chips - betAmount;
-    document.getElementById("your-bet").innerHTML = yourBet.textContent =
-      "Bet: $" + betAmount;
-    playerEl.textContent = player.name + ": $" + player.chips;
-    betPlaced = true;
+  let betInput = document.querySelector("input").value;
+  let betAmount = parseInt(betInput);
+
+  if (isNaN(betAmount) || betAmount <= 0 || betAmount > player.chips) {
+    alert("Invalid bet! Enter a number between 1 and " + player.chips);
+    return;
   }
-  if (
-    (betPlaced === false && betIn.value === "null") ||
-    betIn.value === null ||
-    betIn.value === "" ||
-    betIn.value === NaN ||
-    betIn.value === "NaN" ||
-    betIn.value === "$NaN" ||
-    (betPlaced === false && betAmount === "null") ||
-    betAmount === null ||
-    betAmount === "" ||
-    betAmount === NaN ||
-    betAmount === "NaN" ||
-    betAmount === "$NaN"
-  ) {
-    alert("Please enter a valid bet");
-    betPlaced = false;
-  }
-  // else if (betPlaced === true && betAmount > 0)
-  //     player.chips = betAmount + player.chips
-  //     betAmount = Number(prompt("Please enter a new bet"));
-  //     player.chips = player.chips - betAmount
-  //     document.getElementById("your-bet").innerHTML =
-  //     yourBet.textContent = "Bet: $" + betAmount
-  //     playerEl.textContent = player.name + ": $" + player.chips
-  //     betPlaced = true;
+
+  player.chips -= betAmount;
+  betPlaced = true;
+
+  yourBet.textContent = "Bet: $" + betAmount;
+  playerEl.textContent = player.name + ": $" + player.chips;
 }
 
-//API STUFF
-//Need to make a function that shuffles deck when about 50% of the cards have been used.
-
-function callApi() {
-  fetch(
-    "https://deckofcardsapi.com/api/deck/2w8q9pp938w7/shuffle/?deck_count=6"
-  )
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-}
-
-//Can now read value of cards drawn . Now to redo the math in functions with the API
-//Gotta make it convert strings on non numeric cards to numbers so it can be used in the math functions.
-
-function drawCard() {
-  fetch("https://deckofcardsapi.com/api/deck/2w8q9pp938w7/draw/?count=1")
+async function callApi() {
+  fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.cards);
-
-      for (i in data.cards) {
-        console.log(data.cards[i].value);
-        if (
-          data.cards[i].value === "JACK" ||
-          data.cards[i].value === "KING" ||
-          data.cards[i].value === "QUEEN"
-        ) {
-          console.log("Face card found");
-          data.cards[i].value = 10;
-          sum += data.cards[i].value;
-          console.log(sum);
-        }
-        if (data.cards[i].value === "ACE" && sum < 11) {
-          console.log("Ace found and sum is less than 11");
-          data.cards[i].value = 11;
-          sum += data.cards[i].value;
-          console.log(sum);
-        }
-        if (data.cards[i].value === "ACE" && sum < 10) {
-          console.log("Ace found and sum is over 9");
-          data.cards[i].value = 1;
-          sum += data.cards[i].value;
-          console.log(sum);
-        }
-        if (
-          data.cards[i].value === "1" ||
-          data.cards[i].value === "2" ||
-          data.cards[i].value === "3" ||
-          data.cards[i].value === "4" ||
-          data.cards[i].value === "5" ||
-          data.cards[i].value === "6" ||
-          data.cards[i].value === "7" ||
-          data.cards[i].value === "8" ||
-          data.cards[i].value === "9" ||
-          data.cards[i].value === "10"
-        ) {
-          console.log("Number found");
-          data.cards[i].value = parseInt(data.cards[i].value);
-          sum += data.cards[i].value;
-          console.log(sum);
-        }
-        {
-          cardVal.push(data.cards[i].value);
-          console.log(cardVal);
-          let imageUrl = data.cards[i].image;
-          document.getElementById("card-img").innerHTML +=
-            '<img src="' + imageUrl + '">';
-        }
-      }
-    });
+      deckId = data.deck_id;
+      console.log("Deck ID:", deckId);
+    })
+    .catch((error) => console.error("Error fetching deck:", error));
 }
 
-//Cleaner way to write if statements? 
+callApi();
+
+async function drawCard() {
+  let response = await fetch(
+    `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`
+  );
+  let data = await response.json();
+
+  let card = data.cards[0];
+  let cardValue = card.value;
+
+  console.log("Raw card value:", card.value);
+
+  if (["JACK", "QUEEN", "KING"].includes(cardValue)) {
+    cardValue = 10;
+  } else if (cardValue === "ACE") {
+    cardValue = sum < 11 ? 11 : 1;
+  } else {
+    cardValue = parseInt(cardValue);
+  }
+
+  console.log("Processed card value:", cardValue);
+
+  document.getElementById("card-img").innerHTML += `<img src="${card.image}">`;
+
+  if (data.remaining < 156) {
+    callApi();
+  }
+
+  return cardValue;
+}
+

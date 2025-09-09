@@ -1,6 +1,6 @@
 Known issues: 
 
-Can place empty bets or enter text
+Can place empty bets or enter text - FIXED
 
 Two aces at start results in 22 and bust. Aces should be 1 when needed and 11 when not.
 
@@ -14,7 +14,7 @@ If the sum of my hand is higher than 16 but still higher than the dealers' hand 
 This will very easily lead to you going bust.
 
 Gotta implement so that the non numeric cards I fetch from the API can be parsed into number instead of string
-and can from there be used in the mathematical equations of the game.
+and can from there be used in the mathematical equations of the game. --> FIXED
 
 Gotta fix the input boxes on bet and name.
 
