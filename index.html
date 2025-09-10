@@ -1,67 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackjack</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-</head>
-<body>
-    <!-- API Controls - use classes since these are utility buttons -->
-    <div class="controls">
+    <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+    />
+  </head>
+  <body>
+    <!-- <div class="controls">
         <button class="control-btn" onclick="callApi()">Call API/SHUFFLE</button>
         <button class="control-btn" onclick="drawCard()">API DRAW CARD</button>
-    </div>
+    </div> -->
 
     <h1>Blackjack</h1>
-    <!-- Message is unique - keep ID -->
     <p id="message-el">Want to play a round?</p>
-    <!-- Card display is unique - keep ID -->
-    <div id="card-img"></div>
 
-    <!-- Dealer section - use classes for repeated elements -->
     <div class="game-section dealer-section">
-        <p id="dealer-cards-el" class="cards-display">Dealer cards:</p>
-        <p id="dealer-sum-el" class="sum-display">Dealers' sum:</p>
+      <p id="dealer-cards-el" class="cards-display">Dealer cards:</p>
+      <p id="dealer-sum-el" class="sum-display">Dealers' sum:</p>
+      <div id="dealer-card-img" class="card-container"></div>
+      <p id="dealer-el"></p>
     </div>
-
-    <!-- Player section - use classes for repeated elements -->
-    <div class="game-section player-section">
-        <p id="cards-el" class="cards-display">Your cards:</p>
-        <p id="sum-el" class="sum-display">Your sum:</p>
-    </div>
-
-    <!-- Bet display is unique - keep ID -->
     <div class="game-section">
-        <p id="your-bet">Bet:</p>
+      <p id="your-bet">Bet:</p>
+    </div>
+    <div class="game-section player-section">
+      <p id="cards-el" class="cards-display">Your cards:</p>
+      <p id="sum-el" class="sum-display">Your sum:</p>
+      <div id="player-card-img" class="card-container"></div>
+      <p id="player-el"></p>
     </div>
 
-    <!-- Game controls - use classes for buttons -->
     <div class="game-controls">
-        <button class="game-btn" onclick="startGame()">START GAME</button>
-        <button class="game-btn" onclick="newCard()">HIT ME</button>
+      <button class="game-btn" onclick="startGame()">START GAME</button>
+      <button class="game-btn" onclick="newCard()">HIT ME</button>
     </div>
 
     <div class="game-controls">
-        <button class="game-btn" onclick="stand()">STAND</button>
-    </div>
-
-    <!-- Score displays are unique - keep IDs -->
-    <p id="dealer-el"></p>
-    <p id="player-el"></p>
-
-    <!-- Input sections - use classes for repeated elements -->
-    <div class="input-section">
-        <button class="action-btn" onclick="placeBet()">PLACE BET</button>
-        <input id="bet-input" class="game-input" type="number" />
+      <button class="game-btn" onclick="stand()">STAND</button>
     </div>
 
     <div class="input-section">
-        <button class="action-btn" onclick="setName()">SET YOUR NAME</button>
-        <input id="name-input" class="game-input" />
+      <button class="action-btn" onclick="placeBet()">PLACE BET</button>
+      <input id="bet-input" class="game-input" type="number" />
+    </div>
+
+    <div class="input-section">
+      <button class="action-btn" onclick="setName()">SET YOUR NAME</button>
+      <input id="name-input" class="game-input" />
     </div>
 
     <script src="index.js"></script>
-</body>
+  </body>
 </html>

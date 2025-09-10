@@ -1,10 +1,8 @@
 Known issues: 
 
-Can place empty bets or enter text - FIXED
+Two aces at start results in 22 and bust. Aces should be 1 when needed and 11 when not. 
 
-Two aces at start results in 22 and bust. Aces should be 1 when needed and 11 when not.
-
-Bet section has no value after win, but last bet shows nonetheless.
+Bet section has no value after win, but last bet shows nonetheless. Need to clear
 
 When dealer wins, the bet is added like this 50000 + 500 = 50000500 instead of 50500
 
@@ -12,9 +10,6 @@ If it's a tie the "win proceedings" are added like above. Disgusting
 
 If the sum of my hand is higher than 16 but still higher than the dealers' hand I can't stand and can only hit. 
 This will very easily lead to you going bust.
-
-Gotta implement so that the non numeric cards I fetch from the API can be parsed into number instead of string
-and can from there be used in the mathematical equations of the game. --> FIXED
 
 Gotta fix the input boxes on bet and name.
 

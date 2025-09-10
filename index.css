@@ -1,4 +1,3 @@
-/* Reset styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,7 +5,7 @@
   outline: 0;
 }
 
-/* Base styles */
+
 body {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", Arial, sans-serif;
   background-image: url("images/table.png");
@@ -16,6 +15,11 @@ body {
   text-align: center;
   height: 100%;
   width: 100%;
+    display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 h1 {
@@ -23,11 +27,26 @@ h1 {
   text-shadow: 2px 2px black;
 }
 
-/* Game sections */
+
+.card-container {
+  padding: 10px;
+  min-height: 100px;
+}
+
+.card-container img {
+  max-width: 100px;
+  max-height: 150px;
+  transition: transform 0.2s;
+}
+
+
+
 .game-section {
-  width: 300px;
-  margin: 10px auto;
+  width: 400px;
+  margin: 20px auto;
   text-shadow: 2px 2px black;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .dealer-section {
@@ -38,21 +57,18 @@ h1 {
   border: goldenrod solid;
 }
 
-/* Cards and sum displays */
 .cards-display,
 .sum-display {
   font-size: 1.2em;
   margin: 5px 0;
 }
 
-/* Message element */
 #message-el {
   font-style: italic;
   font-size: 1.5em;
   text-shadow: 2px 2px black;
 }
 
-/* Score displays */
 #player-el,
 #dealer-el {
   width: 300px;
@@ -71,7 +87,6 @@ h1 {
   border: maroon solid;
 }
 
-/* Buttons */
 .game-btn,
 .control-btn,
 .action-btn {
@@ -101,23 +116,17 @@ h1 {
   background: white;
 }
 
-/* Controls sections */
+
 .controls,
 .game-controls,
 .input-section {
   margin: 10px 0;
 }
 
-/* Game inputs */
+
 .game-input {
   margin: 5px;
   padding: 5px;
   border-radius: 2px;
 }
 
-/* Card images */
-#card-img img {
-  max-width: 100px;
-  max-height: 100px;
-  margin: 5px;
-}
