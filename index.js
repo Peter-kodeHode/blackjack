@@ -9,7 +9,7 @@ let dealer = {
 };
 
 let cards = [];
-var cardVal = [];
+let cardVal = [];
 let sum = 0;
 let dealerCards = [];
 let dealerSum = 0;
