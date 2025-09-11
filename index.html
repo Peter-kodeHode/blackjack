@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackjack</title>
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
@@ -15,20 +15,28 @@
         <button class="control-btn" onclick="callApi()">Call API/SHUFFLE</button>
         <button class="control-btn" onclick="drawCard()">API DRAW CARD</button>
     </div> -->
-
-    <h1>Blackjack</h1>
-    <p id="message-el">Want to play a round?</p>
-
+    <div>
+      <h1>Blackjack</h1>
+      <p id="message-el">Want to play a round?</p>
+    </div>
     <div class="game-section dealer-section">
       <p id="dealer-cards-el" class="cards-display">Dealer cards:</p>
       <p id="dealer-sum-el" class="sum-display">Dealers' sum:</p>
       <div id="dealer-card-img" class="card-container"></div>
-     
-    </div> <p id="dealer-el"></p>
+    </div>
+    <p id="dealer-el"></p>
     <div class="game-section">
+      
+    <div class="game-controls">
+      <button class="game-btn" onclick="startGame()">START GAME</button>
+            <button class="game-btn" onclick="stand()">STAND</button>  
+            <button class="game-btn" onclick="newCard()">HIT ME</button>
+    </div>
+
       <p id="your-bet">Bet:</p>
-    </div> <p id="player-el"></p>
-    
+    </div>
+    <p id="player-el"></p>
+
     <div class="input-section">
       <button class="action-btn" onclick="placeBet()">PLACE BET</button>
       <input id="bet-input" class="game-input" type="number" />
@@ -36,26 +44,15 @@
     <div class="game-section player-section">
       <p id="cards-el" class="cards-display">Your cards:</p>
       <p id="sum-el" class="sum-display">Your sum:</p>
-      
+
       <div id="player-card-img" class="card-container"></div>
-     
     </div>
-
-    <div class="game-controls">
-      <button class="game-btn" onclick="startGame()">START GAME</button>
-            <button class="game-btn" onclick="stand()">STAND</button>  
-            <button class="game-btn" onclick="newCard()">HIT ME</button>
-
-    </div>
-
-
-
 
     <div class="input-section">
       <button class="action-btn" onclick="setName()">SET YOUR NAME</button>
       <input id="name-input" class="game-input" />
     </div>
 
-    <script src="index.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
