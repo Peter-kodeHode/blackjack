@@ -9,19 +9,33 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
     />
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicon/favicon-16x16.png"
+    />
     <link rel="manifest" href="favicon/site.webmanifest" />
   </head>
   <body>
-    <!-- <div class="controls">
-        <button class="control-btn" onclick="callApi()">Call API/SHUFFLE</button>
-        <button class="control-btn" onclick="drawCard()">API DRAW CARD</button>
-    </div> -->
-    <div>
+
       <h1>Blackjack</h1>
       <p id="message-el">Want to play a round?</p>
+      <p id="your-bet">Bet:</p>
+    <div class="input-section">
+      <button class="action-btn" onclick="placeBet()">PLACE BET</button>
+      <input id="bet-input" class="game-input" type="number" />
     </div>
     <div class="game-section dealer-section">
       <p id="dealer-cards-el" class="cards-display">Dealer cards:</p>
@@ -33,28 +47,25 @@
       <div class="game-controls">
         <button class="game-btn" onclick="startGame()">START GAME</button>
         <button class="game-btn" onclick="stand()">STAND</button>
-        <button class="game-btn" onclick="newCard()">HIT ME</button>
+        <button class="game-btn" onclick="newCard()">HIT</button>
       </div>
 
-      <p id="your-bet">Bet:</p>
+      
     </div>
     <p id="player-el"></p>
 
-    <div class="input-section">
-      <button class="action-btn" onclick="placeBet()">PLACE BET</button>
-      <input id="bet-input" class="game-input" type="number" />
-    </div>
+
     <div class="game-section player-section">
       <p id="cards-el" class="cards-display">Your cards:</p>
       <p id="sum-el" class="sum-display">Your sum:</p>
 
       <div id="player-card-img" class="card-container"></div>
     </div>
-
+<!-- 
     <div class="input-section">
       <button class="action-btn" onclick="setName()">SET YOUR NAME</button>
       <input id="name-input" class="game-input" />
-    </div>
+    </div> -->
 
     <script src="script.js"></script>
   </body>
