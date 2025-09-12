@@ -241,8 +241,6 @@ function resetGameState() {
   betAmount = 0;
   yourBet.textContent = "Bet: $0";
   updateScores();
-  
-
 }
 
 function updateScores() {
