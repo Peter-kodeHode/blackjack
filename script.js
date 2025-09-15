@@ -312,9 +312,9 @@ function handlePush() {
 
 function resetGameState() {
   // Return bet if game hasn't started yet
-  if (betPlaced && !hasCards) {
+  if (betPlaced && !hasCards && !isAlive) {
     player.chips += currentBet;
-    updateScores();
+    
   }
 
   hasCards = false;
