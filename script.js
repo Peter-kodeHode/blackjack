@@ -5,7 +5,7 @@ let player = {
 
 let dealer = {
   name: "Dealer",
-  chips: 50000000,
+  chips: 500000,
 };
 
 let cards = [];
@@ -18,6 +18,7 @@ let isAlive = false;
 let hasCards = false;
 let betPlaced = false;
 let betAmount = 0;
+let currentBet = 0;
 let message = "";
 let isStanding = false;
 let deckId = "";
@@ -47,6 +48,7 @@ const dealerSumEl = document.getElementById("dealer-sum-el");
 const yourBet = document.getElementById("your-bet");
 const nameIn = document.getElementById("name-input");
 const betIn = document.getElementById("bet-input");
+const payOutMessageEl = document.getElementById("payout-message-el");
 
 playerEl.textContent = player.name + ": $" + player.chips;
 
@@ -66,7 +68,7 @@ async function startGame() {
     isAlive = true;
     hasBlackJack = false;
     isStanding = false;
-
+    //WHY IT DO THIS WHEN SPAM BUTTON
     let firstCard = await drawCard(false);
     let secondCard = await drawCard(false);
     cards = [firstCard, secondCard];
@@ -114,7 +116,7 @@ function renderGame() {
       message = "Natural Blackjack! You win!";
       handleWin(2.5);
     } else {
-      message = "Do you want to draw a new card?";
+      message = "Do you want to hit or stand?";
     }
   }
 
@@ -198,6 +200,46 @@ function setName() {
       player.name + ": $" + player.chips;
   }
 }
+//gotta fix betting logic to show in the input box and not add it to the pot before player has clicked place bet button
+function bet50() {
+  if (player.chips >= 50) {
+    player.chips -= 50;
+    betAmount = 50;
+    currentBet += betAmount;
+    betPlaced = true;
+    yourBet.textContent = "Bet: $" + currentBet;
+    betIn.innerHTML = betAmount;
+    updateScores();
+  } else {
+    alert("Insufficient chips!");
+  }
+}
+
+function bet10() {
+  if (player.chips >= 10) {
+    player.chips -= 10;
+    betAmount = 10;
+    currentBet += betAmount;
+    betPlaced = true;
+    yourBet.textContent = "Bet: $" + currentBet;
+    updateScores();
+  } else {
+    alert("Insufficient chips!");
+  }
+}
+
+function bet1() {
+  if (player.chips >= 1) {
+    player.chips -= 1;
+    betAmount = 1;
+    currentBet += betAmount;
+    betPlaced = true;
+    yourBet.textContent = "Bet: $" + currentBet;
+    updateScores();
+  } else {
+    alert("Insufficient chips!");
+  }
+}
 
 function placeBet() {
   let betInput = document.querySelector("input").value;
@@ -209,29 +251,30 @@ function placeBet() {
   }
 
   player.chips -= betAmount;
+  currentBet += betAmount;
   betPlaced = true;
 
-  yourBet.textContent = "Bet: $" + betAmount;
+  yourBet.textContent = "Bet: $" + currentBet;
   updateScores();
 }
 
 function handleWin(multiplier) {
-  let winAmount = betAmount * multiplier;
+  let winAmount = currentBet * multiplier;
   player.chips += winAmount;
   dealer.chips -= winAmount;
-  console.log(`Player won ${winAmount}. Bet was ${betAmount}`);
+  payOutMessageEl.textContent = `Player won ${winAmount}. Bet was ${currentBet}`;
   resetGameState();
 }
 
 function handleLoss() {
-  dealer.chips += betAmount;
-  console.log(`Player lost ${betAmount}`);
+  dealer.chips += currentBet;
+  payOutMessageEl.textContent = `Player lost ${currentBet}.`;
   resetGameState();
 }
 
 function handlePush() {
-  player.chips += betAmount;
-  console.log(`Push - returning bet of ${betAmount}`);
+  player.chips += currentBet;
+  payOutMessageEl.textContent = `Push - returning bet of ${currentBet}.`;
   resetGameState();
 }
 
@@ -239,6 +282,7 @@ function resetGameState() {
   hasCards = false;
   betPlaced = false;
   betAmount = 0;
+  currentBet = 0;
   yourBet.textContent = "Bet: $0";
   updateScores();
 }
