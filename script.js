@@ -68,7 +68,7 @@ async function startGame() {
     isAlive = true;
     hasBlackJack = false;
     isStanding = false;
-    //WHY IT DO THIS WHEN SPAM BUTTON
+    // If I spam start game it draws too many cards
     let firstCard = await drawCard(false);
     let secondCard = await drawCard(false);
     cards = [firstCard, secondCard];
@@ -193,6 +193,7 @@ async function newCard() {
   }
 }
 
+//Want input box instead of prompt
 function setName() {
   player["name"] = prompt("Please enter your name");
   if (player.name != null) {
@@ -200,7 +201,29 @@ function setName() {
       player.name + ": $" + player.chips;
   }
 }
-//gotta fix betting logic to show in the input box and not add it to the pot before player has clicked place bet button
+//gotta fix betting logic to show in the input box
+// and not add it to the pot before player has 
+// clicked place bet button
+
+function resetBet() {
+  if (betPlaced) {
+    player.chips += currentBet;
+  }
+}
+
+function bet100() {
+  if (player.chips >= 100) {
+    player.chips -= 100;
+    betAmount = 100;
+    currentBet += betAmount;
+    betPlaced = true;
+    yourBet.textContent = "Bet: $" + currentBet;
+    updateScores();
+  } else {
+    alert("Insufficient chips!");
+  }
+}
+
 function bet50() {
   if (player.chips >= 50) {
     player.chips -= 50;
@@ -208,7 +231,6 @@ function bet50() {
     currentBet += betAmount;
     betPlaced = true;
     yourBet.textContent = "Bet: $" + currentBet;
-    betIn.innerHTML = betAmount;
     updateScores();
   } else {
     alert("Insufficient chips!");
@@ -219,6 +241,19 @@ function bet10() {
   if (player.chips >= 10) {
     player.chips -= 10;
     betAmount = 10;
+    currentBet += betAmount;
+    betPlaced = true;
+    yourBet.textContent = "Bet: $" + currentBet;
+    updateScores();
+  } else {
+    alert("Insufficient chips!");
+  }
+}
+
+function bet5() {
+  if (player.chips >= 5) {
+    player.chips -= 5;
+    betAmount = 5;
     currentBet += betAmount;
     betPlaced = true;
     yourBet.textContent = "Bet: $" + currentBet;
@@ -263,28 +298,55 @@ function handleWin(multiplier) {
   player.chips += winAmount;
   dealer.chips -= winAmount;
   payOutMessageEl.textContent = `Player won ${winAmount}. Bet was ${currentBet}`;
-  resetGameState();
 }
 
 function handleLoss() {
   dealer.chips += currentBet;
   payOutMessageEl.textContent = `Player lost ${currentBet}.`;
-  resetGameState();
 }
 
 function handlePush() {
   player.chips += currentBet;
   payOutMessageEl.textContent = `Push - returning bet of ${currentBet}.`;
-  resetGameState();
 }
 
 function resetGameState() {
+  // Return bet if game hasn't started yet
+  if (betPlaced && !hasCards) {
+    player.chips += currentBet;
+    updateScores();
+  }
+
   hasCards = false;
   betPlaced = false;
   betAmount = 0;
   currentBet = 0;
+  isAlive = false;
+  hasBlackJack = false;
+  isStanding = false;
+  
   yourBet.textContent = "Bet: $0";
   updateScores();
+  
+  // Clear the card containers
+  const dealerContainer = document.getElementById("dealer-card-img");
+  const playerContainer = document.getElementById("player-card-img");
+  dealerContainer.innerHTML = "";
+  playerContainer.innerHTML = "";
+  
+  // Reset card arrays and sums
+  cards = [];
+  dealerCards = [];
+  sum = 0;
+  dealerSum = 0;
+  
+  // Update the display
+  cardsEl.textContent = "Cards: ";
+  dealerCardsEl.textContent = "Cards: ";
+  sumEl.textContent = "Sum: ";
+  dealerSumEl.textContent = "Sum: ";
+  messageEl.textContent = "Want to play a round?";
+  payOutMessageEl.textContent = "";
 }
 
 function updateScores() {

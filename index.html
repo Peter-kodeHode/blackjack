@@ -37,6 +37,12 @@
     </div>
     <p id="dealer-el"></p>
     <p id="message-el">Want to play a round?</p>
+    <div class="game-controls">
+      <!-- <button class="action-btn" onclick="setName()">NAME</button> -->
+      <button class="game-btn" onclick="newCard()">HIT</button>
+      <button class="game-btn" onclick="stand()">STAND</button>
+         
+    </div>
     <p id="payout-message-el"></p>
 
     <p id="player-el"></p>
@@ -48,21 +54,21 @@
       </div>
       <div id="player-card-img" class="card-container"></div>
     </div>
-    <p id="your-bet">Bet:</p>
     <div class="game-controls">
-      <!-- <button class="action-btn" onclick="setName()">NAME</button> -->
-      <button class="game-btn" onclick="newCard()">HIT</button>
-      <button class="game-btn" onclick="stand()">STAND</button>
+      <button class="game-btn" onclick="startGame()">START</button>
+       <button class="game-btn" onclick="resetGameState()">RESET</button>
+  
     </div>
-    <div class="input-section">
+    <div class="game-controls">
+      <p id="your-bet">Bet:</p>
       <button class="bet-btn" onclick="bet1()">1</button>
+      <button class="bet-btn" onclick="bet5()">5</button>
       <button class="bet-btn" onclick="bet10()">10</button>
       <button class="bet-btn" onclick="bet50()">50</button>
+      <button class="bet-btn" onclick="bet100()">100</button>
 
-      <input id="bet-input" class="game-input" type="number" />
-      <button class="bet-btn" id="place-bet-btn" onclick="placeBet()">PLACE BET</button>
-      
-    </div> <button class="game-btn" onclick="startGame()">START GAME</button>
+    <!-- <input id="bet-input" class="game-input" type="number" /> -->
+    <!-- <div class="game-controls"><button class="bet-btn" id="place-bet-btn" onclick="placeBet()">PLACE BET</button> </div> -->
 
     <script src="script.js"></script>
   </body>
