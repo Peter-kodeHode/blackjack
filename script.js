@@ -234,6 +234,20 @@ function bet100() {
   }
 }
 
+function betAll() {
+  if (player.chips > 0 && !hasCards) {
+    betAmount = player.chips;
+    currentBet += betAmount;
+    player.chips = 0;
+    betPlaced = true;
+    yourBet.textContent = "Bet: $" + currentBet;
+    updateScores();
+      } else {
+    alert("Insufficient chips!");
+  }
+  }
+
+
 function bet50() {
   if (player.chips >= 50 && !hasCards) {
     player.chips -= 50;
