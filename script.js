@@ -1,5 +1,5 @@
 let player = {
-  name: "You",
+  name: "Player",
   chips: 500,
 };
 
@@ -22,6 +22,7 @@ let currentBet = 0;
 let message = "";
 let isStanding = false;
 let deckId = "";
+
 
 async function callApi() {
   try {
@@ -60,27 +61,36 @@ async function getRandomCard() {
 }
 
 async function startGame() {
+
   if (!deckId) {
     await callApi();
   }
 
   if (!hasCards && betPlaced) {
-    isAlive = true;
-    hasBlackJack = false;
-    isStanding = false;
-    // If I spam start game it draws too many cards
-    let firstCard = await drawCard(false);
-    let secondCard = await drawCard(false);
-    cards = [firstCard, secondCard];
-    sum = firstCard + secondCard;
+    try {
+      isLoading = true;
+      isAlive = true;
+      hasBlackJack = false;
+      isStanding = false;
 
-    let dealerFirstCard = await drawCard(true);
-    let dealerSecondCard = await drawCard(true);
-    dealerCards = [dealerFirstCard, dealerSecondCard];
-    dealerSum = dealerFirstCard + dealerSecondCard;
+      let firstCard = await drawCard(false);
+      let secondCard = await drawCard(false);
+      cards = [firstCard, secondCard];
+      sum = firstCard + secondCard;
 
-    hasCards = true;
-    renderGame();
+      let dealerFirstCard = await drawCard(true);
+      let dealerSecondCard = await drawCard(true);
+      dealerCards = [dealerFirstCard, dealerSecondCard];
+      dealerSum = dealerFirstCard + dealerSecondCard;
+
+      hasCards = true;
+      renderGame();
+    } catch (error) {
+      console.error("Error starting game:", error);
+      messageEl.textContent = "Error starting game. Please try again.";
+    } finally {
+      isLoading = false;
+    }
   }
 }
 
@@ -89,18 +99,18 @@ function isNaturalBlackjack(sum, cards) {
 }
 
 function renderGame() {
-  cardsEl.textContent = player.name + "'s Cards: ";
+  cardsEl.textContent =  "Cards: ";
   for (let i = 0; i < cards.length; i++) {
     cardsEl.textContent += cards[i] + " ";
   }
 
-  dealerCardsEl.textContent = "Dealers' cards: ";
+  dealerCardsEl.textContent = "Cards: ";
   for (let i = 0; i < dealerCards.length; i++) {
     dealerCardsEl.textContent += dealerCards[i] + " ";
   }
 
   sumEl.textContent = "Sum: " + sum;
-  dealerSumEl.textContent = "Dealer sum: " + dealerSum;
+  dealerSumEl.textContent = "Sum: " + dealerSum;
 
   if (!isStanding) {
     if (sum > 21) {
@@ -206,13 +216,13 @@ function setName() {
 // clicked place bet button
 
 function resetBet() {
-  if (betPlaced) {
+  if (betPlaced && !hasCards && !isAlive) {
     player.chips += currentBet;
   }
 }
 
 function bet100() {
-  if (player.chips >= 100) {
+  if (player.chips >= 100 && !hasCards) {
     player.chips -= 100;
     betAmount = 100;
     currentBet += betAmount;
@@ -225,8 +235,9 @@ function bet100() {
 }
 
 function bet50() {
-  if (player.chips >= 50) {
+  if (player.chips >= 50 && !hasCards) {
     player.chips -= 50;
+   
     betAmount = 50;
     currentBet += betAmount;
     betPlaced = true;
@@ -238,8 +249,9 @@ function bet50() {
 }
 
 function bet10() {
-  if (player.chips >= 10) {
+  if (player.chips >= 10 && !hasCards) {
     player.chips -= 10;
+   
     betAmount = 10;
     currentBet += betAmount;
     betPlaced = true;
@@ -251,8 +263,9 @@ function bet10() {
 }
 
 function bet5() {
-  if (player.chips >= 5) {
+  if (player.chips >= 5 && !hasCards) {
     player.chips -= 5;
+   
     betAmount = 5;
     currentBet += betAmount;
     betPlaced = true;
@@ -264,8 +277,9 @@ function bet5() {
 }
 
 function bet1() {
-  if (player.chips >= 1) {
+  if (player.chips >= 1 && !hasCards) {
     player.chips -= 1;
+    hasCards = false;
     betAmount = 1;
     currentBet += betAmount;
     betPlaced = true;
@@ -298,24 +312,34 @@ function handleWin(multiplier) {
   player.chips += winAmount;
   dealer.chips -= winAmount;
   payOutMessageEl.textContent = `Player won ${winAmount}. Bet was ${currentBet}`;
+  updateScores();
+  setTimeout(() => {resetGameState();}, 2000);
 }
 
 function handleLoss() {
   dealer.chips += currentBet;
   payOutMessageEl.textContent = `Player lost ${currentBet}.`;
+  updateScores();
+    setTimeout(() => {resetGameState();}, 2000);
 }
 
 function handlePush() {
   player.chips += currentBet;
   payOutMessageEl.textContent = `Push - returning bet of ${currentBet}.`;
+  updateScores();
+    setTimeout(() => {resetGameState();}, 2000);
+}
+
+function returnBet() {
+  if (betPlaced && !hasCards) {
+    player.chips += currentBet; betAmount = 0;
+  currentBet = 0;
+   yourBet.textContent = "Bet: $0";
+     updateScores();
+  }
 }
 
 function resetGameState() {
-  // Return bet if game hasn't started yet
-  if (betPlaced && !hasCards && !isAlive) {
-    player.chips += currentBet;
-    
-  }
 
   hasCards = false;
   betPlaced = false;
@@ -328,19 +352,19 @@ function resetGameState() {
   yourBet.textContent = "Bet: $0";
   updateScores();
   
-  // Clear the card containers
+ 
   const dealerContainer = document.getElementById("dealer-card-img");
   const playerContainer = document.getElementById("player-card-img");
   dealerContainer.innerHTML = "";
   playerContainer.innerHTML = "";
   
-  // Reset card arrays and sums
+ 
   cards = [];
   dealerCards = [];
   sum = 0;
   dealerSum = 0;
   
-  // Update the display
+
   cardsEl.textContent = "Cards: ";
   dealerCardsEl.textContent = "Cards: ";
   sumEl.textContent = "Sum: ";

@@ -29,7 +29,7 @@
     <h1>Blackjack</h1>
 
     <div class="game-section dealer-section">
-      <div class="card-info">
+      <div class="card-info dealer-card-info">
         <p id="dealer-cards-el" class="cards-display">Cards:</p>
         <p id="dealer-sum-el" class="sum-display">Sum:</p>
       </div>
@@ -43,24 +43,25 @@
       <button class="game-btn" onclick="stand()">STAND</button>
          
     </div>
+     <p id="your-bet">Bet:</p>
     <p id="payout-message-el"></p>
 
     <p id="player-el"></p>
 
     <div class="game-section player-section">
-      <div class="card-info">
+      <div class="card-info player-card-info">
         <p id="cards-el" class="cards-display">Cards:</p>
         <p id="sum-el" class="sum-display">Sum:</p>
       </div>
       <div id="player-card-img" class="card-container"></div>
     </div>
     <div class="game-controls">
-      <button class="game-btn" onclick="startGame()">START</button>
-       <button class="game-btn" onclick="resetGameState()">RESET</button>
+      <button class="game-btn" id="start-game-btn" onclick="startGame()">START</button>
+       <button class="game-btn" onclick="returnBet()">RETURN BET</button>
   
     </div>
     <div class="game-controls">
-      <p id="your-bet">Bet:</p>
+     
       <button class="bet-btn" onclick="bet1()">1</button>
       <button class="bet-btn" onclick="bet5()">5</button>
       <button class="bet-btn" onclick="bet10()">10</button>
