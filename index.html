@@ -1,79 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <title>Blackjack</title>
-    <link rel="stylesheet" href="styles.css" />
 
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="favicon/favicon-16x16.png"
-    />
-    <link rel="manifest" href="favicon/site.webmanifest" />
-  </head>
-  <body>
-    <h1>Blackjack</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width; initial-scale=0.8; maximum-scale=1.0; user-scalable=0;" />
+  <title>Blackjack</title>
+  <link rel="stylesheet" href="styles.css" />
 
-    <div class="game-section dealer-section">
-      <div class="card-info-box">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
+  <link rel="manifest" href="favicon/site.webmanifest" />
+</head>
+
+<body>
+  <h1>Blackjack</h1>
+
+  <div class="game-section dealer-section">
+    <div class="card-info-box">
       <div class="card-info dealer-card-info">
         <p id="dealer-cards-el" class="cards-display">Cards:</p>
         <p id="dealer-sum-el" class="sum-display">Sum:</p>
-      </div></div>
-      <div id="dealer-card-img" class="card-container"></div>
+      </div>
     </div>
-    <p id="dealer-el"></p>
-    <p id="message-el">Want to play a round?</p>
-    <div class="game-controls">
-      <!-- <button class="action-btn" onclick="setName()">NAME</button> -->
-      <button class="game-btn" onclick="newCard()">HIT</button>
-      <button class="game-btn" onclick="stand()">STAND</button>
-         
-    </div>
-     <p id="your-bet">Bet:</p>
-    <p id="payout-message-el"></p>
+    <div id="dealer-card-img" class="card-container"></div>
+  </div>
+  <p id="dealer-el"></p>
+  <p id="message-el">Want to play a round?</p>
+  <div class="game-controls">
+    <!-- <button class="action-btn" onclick="setName()">NAME</button> -->
+    <button class="game-btn" onclick="newCard()">HIT</button>
+    <button class="game-btn" onclick="stand()">STAND</button>
 
-    <p id="player-el"></p>
+  </div>
 
-    <div class="game-section player-section">
-      <div class="card-info-box">
+  <p id="your-bet">Bet:</p>
+  <p id="payout-message-el"></p>
+
+
+  <p id="player-el"></p>
+
+  <div class="game-section player-section">
+    <div class="card-info-box">
       <div class="card-info player-card-info">
         <p id="cards-el" class="cards-display">Cards:</p>
         <p id="sum-el" class="sum-display">Sum:</p>
-      </div></div>
-      <div id="player-card-img" class="card-container"></div>
+      </div>
     </div>
-    <div class="game-controls">
-      <button class="game-btn" id="start-game-btn" onclick="startGame()">START</button>
-       <button class="game-btn" onclick="returnBet()">RETURN BET</button>
-  
-    </div>
-    <div class="game-controls">
-     
-      <button class="bet-btn" onclick="bet1()">1</button>
-      <button class="bet-btn" onclick="bet5()">5</button>
-      <button class="bet-btn" onclick="bet10()">10</button>
-      <button class="bet-btn" onclick="bet50()">50</button>
-      <button class="bet-btn" onclick="bet100()">100</button>
-      <button class="bet-btn" onclick="betAll()">ALL</button>
+    <div id="player-card-img" class="card-container"></div>
+  </div>
+  <div class="game-controls">
+    <button class="game-btn" id="start-game-btn" onclick="startGame()">START</button>
+    <button class="game-btn" onclick="returnBet()">RETURN BET</button>
+  </div>
+  <div class="game-controls">
+
+    <button class="bet-btn" onclick="bet1()">1</button>
+    <button class="bet-btn" onclick="bet5()">5</button>
+    <button class="bet-btn" onclick="bet10()">10</button>
+    <button class="bet-btn" onclick="bet50()">50</button>
+    <button class="bet-btn" onclick="bet100()">100</button>
+    <button class="bet-btn" onclick="betAll()">ALL</button>
 
     <!-- <input id="bet-input" class="game-input" type="number" /> -->
     <!-- <div class="game-controls"><button class="bet-btn" id="place-bet-btn" onclick="placeBet()">PLACE BET</button> </div> -->
 
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>

@@ -23,7 +23,6 @@ let message = "";
 let isStanding = false;
 let deckId = "";
 
-
 async function callApi() {
   try {
     const response = await fetch(
@@ -61,7 +60,6 @@ dealerEl.textContent = dealer.name + ": $" + dealer.chips;
 // }
 
 async function startGame() {
-
   if (!deckId) {
     await callApi();
   }
@@ -99,7 +97,7 @@ function isNaturalBlackjack(sum, cards) {
 }
 
 function renderGame() {
-  cardsEl.textContent =  "Cards: ";
+  cardsEl.textContent = "Cards: ";
   for (let i = 0; i < cards.length; i++) {
     cardsEl.textContent += cards[i] + " ";
   }
@@ -212,7 +210,7 @@ function setName() {
   }
 }
 //gotta fix betting logic to show in the input box
-// and not add it to the pot before player has 
+// and not add it to the pot before player has
 // clicked place bet button
 
 function resetBet() {
@@ -242,16 +240,15 @@ function betAll() {
     betPlaced = true;
     yourBet.textContent = "Bet: $" + currentBet;
     updateScores();
-      } else {
+  } else {
     alert("Insufficient chips!");
   }
-  }
-
+}
 
 function bet50() {
   if (player.chips >= 50 && !hasCards) {
     player.chips -= 50;
-   
+
     betAmount = 50;
     currentBet += betAmount;
     betPlaced = true;
@@ -265,7 +262,7 @@ function bet50() {
 function bet10() {
   if (player.chips >= 10 && !hasCards) {
     player.chips -= 10;
-   
+
     betAmount = 10;
     currentBet += betAmount;
     betPlaced = true;
@@ -279,7 +276,7 @@ function bet10() {
 function bet5() {
   if (player.chips >= 5 && !hasCards) {
     player.chips -= 5;
-   
+
     betAmount = 5;
     currentBet += betAmount;
     betPlaced = true;
@@ -328,7 +325,9 @@ function handleWin(multiplier) {
   payOutMessageEl.style.color = "lightgreen";
   payOutMessageEl.textContent = `Player won ${winAmount}. Bet was ${currentBet}`;
   updateScores();
-  setTimeout(() => {resetGameState();}, 2000);
+  setTimeout(() => {
+    resetGameState();
+  }, 2000);
 }
 
 function handleLoss() {
@@ -336,7 +335,9 @@ function handleLoss() {
   payOutMessageEl.style.color = "red";
   payOutMessageEl.textContent = `Player lost ${currentBet}.`;
   updateScores();
-    setTimeout(() => {resetGameState();}, 2000);
+  setTimeout(() => {
+    resetGameState();
+  }, 2000);
 }
 
 function handlePush() {
@@ -344,20 +345,22 @@ function handlePush() {
   payOutMessageEl.style.color = "yellow";
   payOutMessageEl.textContent = `Push - returning bet of ${currentBet}.`;
   updateScores();
-    setTimeout(() => {resetGameState();}, 2000);
+  setTimeout(() => {
+    resetGameState();
+  }, 2000);
 }
 
 function returnBet() {
   if (betPlaced && !hasCards) {
-    player.chips += currentBet; betAmount = 0;
-  currentBet = 0;
-   yourBet.textContent = "Bet: $0";
-     updateScores();
+    player.chips += currentBet;
+    betAmount = 0;
+    currentBet = 0;
+    yourBet.textContent = "Bet: $0";
+    updateScores();
   }
 }
 
 function resetGameState() {
-
   hasCards = false;
   betPlaced = false;
   betAmount = 0;
@@ -365,22 +368,19 @@ function resetGameState() {
   isAlive = false;
   hasBlackJack = false;
   isStanding = false;
-  
+
   yourBet.textContent = "Bet: $0";
   updateScores();
-  
- 
+
   const dealerContainer = document.getElementById("dealer-card-img");
   const playerContainer = document.getElementById("player-card-img");
   dealerContainer.innerHTML = "";
   playerContainer.innerHTML = "";
-  
- 
+
   cards = [];
   dealerCards = [];
   sum = 0;
   dealerSum = 0;
-  
 
   cardsEl.textContent = "Cards: ";
   dealerCardsEl.textContent = "Cards: ";
@@ -409,7 +409,7 @@ async function drawCard(isDealer = false) {
   let cardValue = card.value;
 
   console.log("Raw card value:", card.value);
-  console.log(card.image)
+  console.log(card.image);
 
   if (["JACK", "QUEEN", "KING"].includes(cardValue)) {
     cardValue = 10;
@@ -426,8 +426,6 @@ async function drawCard(isDealer = false) {
     : document.getElementById("player-card-img");
 
   container.innerHTML += `<img src="${card.image}" alt="Card">`;
-
-
 
   if (data.remaining < 156) {
     callApi();
