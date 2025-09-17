@@ -406,6 +406,7 @@ async function drawCard(isDealer = false) {
   let cardValue = card.value;
 
   console.log("Raw card value:", card.value);
+  console.log(card.image)
 
   if (["JACK", "QUEEN", "KING"].includes(cardValue)) {
     cardValue = 10;
@@ -422,6 +423,8 @@ async function drawCard(isDealer = false) {
     : document.getElementById("player-card-img");
 
   container.innerHTML += `<img src="${card.image}" alt="Card">`;
+
+
 
   if (data.remaining < 156) {
     callApi();
