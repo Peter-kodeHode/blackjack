@@ -55,10 +55,10 @@ playerEl.textContent = player.name + ": $" + player.chips;
 
 dealerEl.textContent = dealer.name + ": $" + dealer.chips;
 
-async function getRandomCard() {
-  let cardValue = await drawCard();
-  return cardValue;
-}
+// async function getRandomCard() {
+//   let cardValue = await drawCard();
+//   return cardValue;
+// }
 
 async function startGame() {
 
@@ -325,6 +325,7 @@ function handleWin(multiplier) {
   let winAmount = currentBet * multiplier;
   player.chips += winAmount;
   dealer.chips -= winAmount;
+  payOutMessageEl.style.color = "lightgreen";
   payOutMessageEl.textContent = `Player won ${winAmount}. Bet was ${currentBet}`;
   updateScores();
   setTimeout(() => {resetGameState();}, 2000);
@@ -332,6 +333,7 @@ function handleWin(multiplier) {
 
 function handleLoss() {
   dealer.chips += currentBet;
+  payOutMessageEl.style.color = "red";
   payOutMessageEl.textContent = `Player lost ${currentBet}.`;
   updateScores();
     setTimeout(() => {resetGameState();}, 2000);
@@ -339,6 +341,7 @@ function handleLoss() {
 
 function handlePush() {
   player.chips += currentBet;
+  payOutMessageEl.style.color = "yellow";
   payOutMessageEl.textContent = `Push - returning bet of ${currentBet}.`;
   updateScores();
     setTimeout(() => {resetGameState();}, 2000);
